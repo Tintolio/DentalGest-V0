@@ -1,0 +1,90 @@
+{
+  "Version": "18.04",
+  "OEM": {
+    "Vendor": "LENOVO",
+    "Product": "20296",
+    "Family": "IDEAPAD"
+  },
+  "BIOS": {
+    "Vendor": "LENOVO",
+    "Version": "89CN32WW"
+  },
+  "CPU": {
+    "OpMode": "32-bit, 64-bit",
+    "CPUs": "4",
+    "Threads": "2",
+    "Cores": "2",
+    "Sockets": "1",
+    "Vendor": "GenuineIntel",
+    "Family": "6",
+    "Model": "69",
+    "Stepping": "1",
+    "Name": "Intel(R) Core(TM) i5-4200U CPU @ 1.60GHz",
+    "Virtualization": "VT-x"
+  },
+  "Arch": "amd64",
+  "GPU": [
+    {
+      "Vendor": "8086",
+      "Model": "0a16"
+    }
+  ],
+  "RAM": 3.9,
+  "Disks": [
+    500.1
+  ],
+  "Partitions": [
+    9.5,
+    266.5
+  ],
+  "Screens": [
+    {
+      "Size": "309mmx174mm",
+      "Resolution": "1366x768",
+      "Frequency": "60.01"
+    }
+  ],
+  "Autologin": false,
+  "LivePatch": false,
+  "Session": {
+    "DE": "ubuntu:GNOME",
+    "Name": "ubuntu",
+    "Type": "x11"
+  },
+  "Language": "es_CL",
+  "Timezone": "America/Santiago",
+  "Install": {
+    "Media": "Ubuntu 18.04.3 LTS \"Bionic Beaver\" - Release amd64 (20190805)",
+    "Type": "GTK",
+    "OEM": false,
+    "PartitionMethod": "manual",
+    "DownloadUpdates": true,
+    "Language": "es",
+    "Minimal": false,
+    "RestrictedAddons": true,
+    "Stages": {
+      "0": "language",
+      "1": "language",
+      "18": "console_setup",
+      "30": "console_setup",
+      "37": "wireless",
+      "84": "prepare",
+      "139": "partman",
+      "168": "start_install",
+      "205": "partman",
+      "213": "partman",
+      "214": "partman",
+      "395": "partman",
+      "405": "partman",
+      "478": "partman",
+      "488": "partman",
+      "517": "partman",
+      "527": "partman",
+      "565": "partman",
+      "580": "timezone",
+      "587": "usersetup",
+      "613": "user_done",
+      "1600": "done"
+    }
+  }
+}

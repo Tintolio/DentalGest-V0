@@ -1,0 +1,339 @@
+/*============================================
+  General
+  ============================================*/
+.cdp-cookies-alerta {
+	
+}
+.cdp-cookies-alerta .cdp-cookies-solapa {
+	display: block;
+	position: fixed;
+	z-index: 100002;
+	width: 120px;
+	text-align: center;
+	font-size:12px;
+	line-height: 18px;
+	padding: 5px 0;
+	font-family: Helvetica, Arial, sans-serif;
+	cursor: pointer;
+  -webkit-border-top-left-radius: 5px;
+  -moz-border-radius-topleft: 5px;
+  border-top-left-radius: 5px;
+  -webkit-border-top-right-radius: 5px;
+  -moz-border-radius-topright: 5px;
+  border-top-right-radius: 5px;
+}
+.cdp-cookies-alerta.cdp-solapa-der .cdp-cookies-solapa {
+	right:0;
+}
+.cdp-cookies-alerta.cdp-solapa-izq .cdp-cookies-solapa {
+	left:0;
+}
+.cdp-cookies-alerta.cdp-solapa-ocultar .cdp-cookies-solapa {
+	display:none;
+}
+.cdp-cookies-alerta .cdp-cookies-texto {
+	position: fixed;
+	left:0; 
+	width:100%;
+	z-index: 100001;
+	padding: 5px 10px 5px 10px;
+}
+.cdp-cookies-alerta .cdp-cookies-texto h4 {
+	text-align: center;
+	font-family: Helvetica, Arial, sans-serif;
+	font-size: 14px;
+	font-weight: normal;
+	line-height: 16px;
+	color:#ffffff;
+	padding: 0 0 5px 0;
+	margin: 0;
+	text-rendering: optimizeLegibility;
+}
+.cdp-cookies-alerta .cdp-cookies-texto p {
+	padding: 5px 0;
+	margin: 0;
+	text-align: center;
+	color:#bbbbbb;
+	font-family: Helvetica, Arial, sans-serif;
+	font-size: 10px;
+	font-weight: normal;
+	line-height: 11px;
+	text-rendering: optimizeLegibility;
+}
+.cdp-cookies-alerta .cdp-cookies-texto a {
+	font-family: Helvetica, Arial, sans-serif;
+	font-size: 10px;
+	font-weight: normal;
+	color: #ff8888;
+	text-decoration: none;
+	border: 0;
+	text-rendering: optimizeLegibility;
+}
+.cdp-cookies-alerta .cdp-cookies-texto a:hover, 
+.cdp-cookies-alerta .cdp-cookies-texto a:active, 
+.cdp-cookies-alerta .cdp-cookies-texto a:visited {
+	color: #ffcccc;
+}
+.cdp-cookies-boton-cerrar {
+	font-size:11px !important;
+	line-height: 20px;
+	display: block;
+	width: 75px;
+	padding: 2px 10px 0 10px;
+	margin:0 auto;
+	text-align: center;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+
+/*============================================
+  Animaciones
+  ============================================*/
+@keyframes animacion_abajo {
+	0% {bottom:0px;}
+	100% {bottom:-200px;}
+}
+@keyframes animacion_arriba {
+	0% {bottom:-200px;}
+	100% {bottom:0px;}
+}
+.cdp-animacion-abajo {
+	animation: animacion_abajo 0.5s forwards;
+    -webkit-animation: animacion_abajo 0.5s forwards;
+}
+.cdp-animacion-arriba {
+	animation: animacion_arriba 0.5s forwards;
+    -webkit-animation: animacion_arriba 0.5s forwards;
+}
+.cdp-mostrar {
+	bottom: 0;
+}
+.cdp-ocultar { 
+	bottom: -200px;
+}
+
+/*============================================
+  Alineaci√≥n
+  ============================================*/
+.cdp-cookies-alerta.cdp-cookies-textos-izq .cdp-cookies-texto h4,
+.cdp-cookies-alerta.cdp-cookies-textos-izq .cdp-cookies-texto p {
+	text-align: left;
+}
+
+/*============================================
+  Color gris
+  ============================================*/
+.cdp-cookies-alerta.cdp-cookies-tema-gris .cdp-cookies-texto {
+	background-color: #444444;
+	border-top:1px solid #222222;
+	border-bottom:1px solid #222222;
+}
+.cdp-cookies-alerta.cdp-cookies-tema-gris .cdp-cookies-texto h4 {
+	color: #ffffff;
+}
+.cdp-cookies-alerta.cdp-cookies-tema-gris .cdp-cookies-texto p {
+	color: #bbbbbb;
+}
+.cdp-cookies-alerta.cdp-cookies-tema-gris .cdp-cookies-texto a {
+	color: #ff8888 !important;
+}
+.cdp-cookies-alerta.cdp-cookies-tema-gris .cdp-cookies-texto a:hover,
+.cdp-cookies-alerta.cdp-cookies-tema-gris .cdp-cookies-texto a:active,
+.cdp-cookies-alerta.cdp-cookies-tema-gris .cdp-cookies-texto a:visited {
+	color: #ffcccc !important;
+}
+.cdp-cookies-alerta.cdp-cookies-tema-gris .cdp-cookies-solapa {
+	background-color: #333;
+	color: #ddd;
+}
+.cdp-cookies-alerta.cdp-cookies-tema-gris .cdp-cookies-solapa:hover {
+	background-color: #666;
+}
+.cdp-cookies-alerta.cdp-cookies-tema-gris .cdp-cookies-boton-cerrar {
+	background-color: #000;
+}
+.cdp-cookies-alerta.cdp-cookies-tema-gris .cdp-cookies-boton-cerrar:hover {
+	background-color: #666;
+}
+
+/*============================================
+  Color blanco
+  ============================================*/
+.cdp-cookies-alerta.cdp-cookies-tema-blanco .cdp-cookies-texto {
+	background-color: #ffffff;
+	border-top:1px solid #dddddd;
+	border-bottom:1px solid #dddddd;
+}
+.cdp-cookies-alerta.cdp-cookies-tema-blanco .cdp-cookies-texto h4 {
+	color: #666666;
+}
+.cdp-cookies-alerta.cdp-cookies-tema-blanco .cdp-cookies-texto p {
+	color: #888888;
+}
+.cdp-cookies-alerta.cdp-cookies-tema-blanco .cdp-cookies-texto a {
+	color: #cc8888;
+}
+.cdp-cookies-alerta.cdp-cookies-tema-blanco .cdp-cookies-texto a:hover,
+.cdp-cookies-alerta.cdp-cookies-tema-blanco .cdp-cookies-texto a:active,
+.cdp-cookies-alerta.cdp-cookies-tema-blanco .cdp-cookies-texto a:visited {
+	color: #eeaaaa;
+}
+.cdp-cookies-alerta.cdp-cookies-tema-blanco .cdp-cookies-solapa {
+	background-color: #fff;
+	color: #333;
+}
+.cdp-cookies-alerta.cdp-cookies-tema-blanco .cdp-cookies-solapa:hover {
+	background-color: #ddd;
+}
+.cdp-cookies-alerta.cdp-cookies-tema-blanco .cdp-cookies-boton-cerrar {
+	background-color: #aaa;
+	color: #000 !important;
+}
+.cdp-cookies-alerta.cdp-cookies-tema-blanco .cdp-cookies-boton-cerrar:hover {
+	background-color: #ddd;
+}
+
+/*============================================
+  Color rojo
+  ============================================*/
+.cdp-cookies-alerta.cdp-cookies-tema-rojo .cdp-cookies-texto {
+	background-color: #e04729;
+	border-top:1px solid #99301b;
+	border-bottom:1px solid #99301b;
+}
+.cdp-cookies-alerta.cdp-cookies-tema-rojo .cdp-cookies-texto h4 {
+	color: #ffffff;
+}
+.cdp-cookies-alerta.cdp-cookies-tema-rojo .cdp-cookies-texto p {
+	color: #dddddd;
+}
+.cdp-cookies-alerta.cdp-cookies-tema-rojo .cdp-cookies-texto a {
+	color: #febebe;
+}
+.cdp-cookies-alerta.cdp-cookies-tema-rojo .cdp-cookies-texto a:hover,
+.cdp-cookies-alerta.cdp-cookies-tema-rojo .cdp-cookies-texto a:active,
+.cdp-cookies-alerta.cdp-cookies-tema-rojo .cdp-cookies-texto a:visited {
+	color: #ffffff;
+}
+.cdp-cookies-alerta.cdp-cookies-tema-rojo .cdp-cookies-solapa {
+	background-color: #e04729;
+	color: #fff;
+}
+.cdp-cookies-alerta.cdp-cookies-tema-rojo .cdp-cookies-solapa:hover {
+	background-color: #a5321c;
+}
+.cdp-cookies-alerta.cdp-cookies-tema-rojo .cdp-cookies-boton-cerrar {
+	background-color: #a5321c;
+}
+.cdp-cookies-alerta.cdp-cookies-tema-rojo .cdp-cookies-boton-cerrar:hover {
+	background-color: #85120c;
+}
+
+/*============================================
+  Color azul
+  ============================================*/
+.cdp-cookies-alerta.cdp-cookies-tema-azul .cdp-cookies-texto {
+	background-color: #5492e0;
+	border-top:1px solid #3f6da7;
+	border-bottom:1px solid #3f6da7;
+}
+.cdp-cookies-alerta.cdp-cookies-tema-azul .cdp-cookies-texto h4 {
+	color: #ffffff;
+}
+.cdp-cookies-alerta.cdp-cookies-tema-azul .cdp-cookies-texto p {
+	color: #eeeeee;
+}
+.cdp-cookies-alerta.cdp-cookies-tema-azul .cdp-cookies-texto a {
+	color: #b7d7ff;
+}
+.cdp-cookies-alerta.cdp-cookies-tema-azul .cdp-cookies-texto a:hover,
+.cdp-cookies-alerta.cdp-cookies-tema-azul .cdp-cookies-texto a:active,
+.cdp-cookies-alerta.cdp-cookies-tema-azul .cdp-cookies-texto a:visited {
+	color: #dcebff;
+}
+.cdp-cookies-alerta.cdp-cookies-tema-azul .cdp-cookies-solapa {
+	background-color: #5492e0;
+	color: #fff;
+}
+.cdp-cookies-alerta.cdp-cookies-tema-azul .cdp-cookies-solapa:hover {
+	background-color: #3472c0;
+}
+.cdp-cookies-alerta.cdp-cookies-tema-azul .cdp-cookies-boton-cerrar {
+	background-color: #2462b0;
+}
+.cdp-cookies-alerta.cdp-cookies-tema-azul .cdp-cookies-boton-cerrar:hover {
+	background-color: #64a2f0;
+}
+
+/*============================================
+  Color verde
+  ============================================*/
+.cdp-cookies-alerta.cdp-cookies-tema-verde .cdp-cookies-texto {
+	background-color: #0b7000;
+	border-top:1px solid #064000;
+	border-bottom:1px solid #064000;
+}
+.cdp-cookies-alerta.cdp-cookies-tema-verde .cdp-cookies-texto h4 {
+	color: #ffffff;
+}
+.cdp-cookies-alerta.cdp-cookies-tema-verde .cdp-cookies-texto p {
+	color: #dddddd;
+}
+.cdp-cookies-alerta.cdp-cookies-tema-verde .cdp-cookies-texto a {
+	color: #75c76c;
+}
+.cdp-cookies-alerta.cdp-cookies-tema-verde .cdp-cookies-texto a:hover,
+.cdp-cookies-alerta.cdp-cookies-tema-verde .cdp-cookies-texto a:active,
+.cdp-cookies-alerta.cdp-cookies-tema-verde .cdp-cookies-texto a:visited {
+	color: #c4ffbe;
+}
+.cdp-cookies-alerta.cdp-cookies-tema-verde .cdp-cookies-solapa {
+	background-color: #0b7000;
+	color: #fff;
+}
+.cdp-cookies-alerta.cdp-cookies-tema-verde .cdp-cookies-solapa:hover {
+	background-color: #095000;
+}
+.cdp-cookies-alerta.cdp-cookies-tema-verde .cdp-cookies-boton-cerrar {
+	background-color: #074000;
+	color: #fff !important;
+}
+.cdp-cookies-alerta.cdp-cookies-tema-verde .cdp-cookies-boton-cerrar:hover {
+	background-color: #2b9010;
+}
+
+/*============================================
+  boton cr√©ditos
+  ============================================*/
+.cdp-cookies-boton-creditos {
+	font-size: 10px;
+	float:right;
+	padding: 10px 0;
+}
+
+6"ê∆¥      ^2Ã^2ÃA7˘C^ mL   ò    :https://www.ochobitshacenunbyte.com/wp-content/plugins/asesor-cookies-para-la-ley-en-espana/html/front/estilos.css?ver=21279adb346a5efc923a6c9c9cfc16a1 necko:classified 1 strongly-framed 1 security-info FnhllAKWRHGAlo+ESXykKAAAAAAAAAAAwAAAAAAAAEaphjojH6pBabDSgSnsfLHeAAAAAgAAAAAAAAAAAAAAAAAAAAEAMwFmCjImkVxP+7sgiYWmMt8FvcOXmlQiTNWFiWlrbpbqgwAAAAAAAAVzMIIFbzCCBFegAwIBAgISA5JiFGqWupqjSHySdyca6iBOMA0GCSqGSIb3DQEBCwUAMEoxCzAJBgNVBAYTAlVTMRYwFAYDVQQKEw1MZXQncyBFbmNyeXB0MSMwIQYDVQQDExpMZXQncyBFbmNyeXB0IEF1dGhvcml0eSBYMzAeFw0xOTEyMTcwOTMzMTFaFw0yMDAzMTYwOTMzMTFaMCYxJDAiBgNVBAMTG3d3dy5vY2hvYml0c2hhY2VudW5ieXRlLmNvbTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAM/sw9Mhh/1hTzvoZf4p9r50zF1cXI4/upJ7zRXDtVUZLxQZ2Mx+QYIBj2DT8Fxvv9Z79v9aT/djP1ocmcmC9LlsN5jLaL5ELwxQM+3roXtCG6Hg8Ojt9wfFyUOK9lax5dLXLN3jyp5g8CJZX5x8d43yF99drvGGpFFoBS+o1RrzIZUvTyFVuuyzcAohZHXjtxg3ndpH1og7OXePM8EquK+Ot6zPkfux6wIUX30L4R9e9vP64BAz7BTSffMrvODptH+h4qvDTKgV6uWGJiOOIq3LpyxpDgXZcbXCvU9P3Mrz0e1ysG97OlKHlb3K4ZhF5amxFzPepsvUUizzH0Fulf8CAwEAAaOCAnEwggJtMA4GA1UdDwEB/wQEAwIFoDAdBgNVHSUEFjAUBggrBgEFBQcDAQYIKwYBBQUHAwIwDAYDVR0TAQH/BAIwADAdBgNVHQ4EFgQU0XZln+a0lfrdmATa4HCew6sQHmowHwYDVR0jBBgwFoAUqEpqYwR93brm0Tm3pkVl7/Oo7KEwbwYIKwYBBQUHAQEEYzBhMC4GCCsGAQUFBzABhiJodHRwOi8vb2NzcC5pbnQteDMubGV0c2VuY3J5cHQub3JnMC8GCCsGAQUFBzAChiNodHRwOi8vY2VydC5pbnQteDMubGV0c2VuY3J5cHQub3JnLzAmBgNVHREEHzAdght3d3cub2Nob2JpdHNoYWNlbnVuYnl0ZS5jb20wTAYDVR0gBEUwQzAIBgZngQwBAgEwNwYLKwYBBAGC3xMBAQEwKDAmBggrBgEFBQcCARYaaHR0cDovL2Nwcy5sZXRzZW5jcnlwdC5vcmcwggEFBgorBgEEAdZ5AgQCBIH2BIHzAPEAdwCyHgXMi6LNiiBOh2b5K7mKJSBna9r6cOeySVMt74uQXgAAAW8Tazi/AAAEAwBIMEYCIQCzmOVQmYRCDj5Egtpqtg7tWymvTkuxPKFxN6GUMeQzdwIhAPfKSOsRkpO2CfUv/siv6kdi/g5XQ/wYaYvr+AZt+vHrAHYAb1N2rDHwMRnYmQCkURX/dxUcEdkCwQApBo2yCJo32RMAAAFvE2s5cQAABAMARzBFAiBHtKO9rde7v6ojTw91J453+cBMJZS8Ew3Y/HE/KF8xowIhAOIGDvtSx7tQSBcTXVn6vJ8mLI2GYq1U+Tv5nO7W8jmgMA0GCSqGSIb3DQEBCwUAA4IBAQAKzaguTm4EpuZLfmu/6jIbhIdjKkOhpeiffBKPY5XCfrgWdul52s6+/IweAcYhSwysTmYj8VEAhSDAbkoNZOPFM+si+r5IcyqpNyADCk85GDyyeZ1qOQ0hrgZWn8Op4esTHqUrdC/vhVBC7NZN50/r+LzlU0EYFqZ60UcOQP4pBX2OPbNsMJ/+I31up4iebN7glL74d984ESpoER0IOBImC+0rTvOk9GWsBAC0rGv/QGXLAMMWcB4BTC1U+VqnAluy/QaYhsEKzDb66DodL7qo8YZRViWOwWb4fQsCHJ+1Ek55v4a0VpWFNi3ovYfe5QkCUVq/Dm7ERDU8YSoPX/MowDAAAwAAAAABAQAAAAAAAAZ4MjU1MTkAAAAOUlNBLVBTUy1TSEEyNTYAA2YKMiaRXE/7uyCJhaYy3wW9w5eaVCJM1YWJaWtuluqDAAAAAAAABXMwggVvMIIEV6ADAgECAhIDkmIUapa6mqNIfJJ3JxrqIE4wDQYJKoZIhvcNAQELBQAwSjELMAkGA1UEBhMCVVMxFjAUBgNVBAoTDUxldCdzIEVuY3J5cHQxIzAhBgNVBAMTGkxldCdzIEVuY3J5cHQgQXV0aG9yaXR5IFgzMB4XDTE5MTIxNzA5MzMxMVoXDTIwMDMxNjA5MzMxMVowJjEkMCIGA1UEAxMbd3d3Lm9jaG9iaXRzaGFjZW51bmJ5dGUuY29tMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAz+zD0yGH/WFPO+hl/in2vnTMXVxcjj+6knvNFcO1VRkvFBnYzH5BggGPYNPwXG+/1nv2/1pP92M/WhyZyYL0uWw3mMtovkQvDFAz7euhe0IboeDw6O33B8XJQ4r2VrHl0tcs3ePKnmDwIllfnHx3jfIX312u8YakUWgFL6jVGvMhlS9PIVW67LNwCiFkdeO3GDed2kfWiDs5d48zwSq4r463rM+R+7HrAhRffQvhH1728/rgEDPsFNJ98yu84Om0f6Hiq8NMqBXq5YYmI44ircunLGkOBdlxtcK9T0/cyvPR7XKwb3s6UoeVvcrhmEXlqbEXM96my9RSLPMfQW6V/wIDAQABo4ICcTCCAm0wDgYDVR0PAQH/BAQDAgWgMB0GA1UdJQQWMBQGCCsGAQUFBwMBBggrBgEFBQcDAjAMBgNVHRMBAf8EAjAAMB0GA1UdDgQWBBTRdmWf5rSV+t2YBNrgcJ7DqxAeajAfBgNVHSMEGDAWgBSoSmpjBH3duubRObemRWXv86jsoTBvBggrBgEFBQcBAQRjMGEwLgYIKwYBBQUHMAGGImh0dHA6Ly9vY3NwLmludC14My5sZXRzZW5jcnlwdC5vcmcwLwYIKwYBBQUHMAKGI2h0dHA6Ly9jZXJ0LmludC14My5sZXRzZW5jcnlwdC5vcmcvMCYGA1UdEQQfMB2CG3d3dy5vY2hvYml0c2hhY2VudW5ieXRlLmNvbTBMBgNVHSAERTBDMAgGBmeBDAECATA3BgsrBgEEAYLfEwEBATAoMCYGCCsGAQUFBwIBFhpodHRwOi8vY3BzLmxldHNlbmNyeXB0Lm9yZzCCAQUGCisGAQQB1nkCBAIEgfYEgfMA8QB3ALIeBcyLos2KIE6HZvkruYolIGdr2vpw57JJUy3vi5BeAAABbxNrOL8AAAQDAEgwRgIhALOY5VCZhEIOPkSC2mq2Du1bKa9OS7E8oXE3oZQx5DN3AiEA98pI6xGSk7YJ9S/+yK/qR2L+DldD/Bhpi+v4Bm368esAdgBvU3asMfAxGdiZAKRRFf93FRwR2QLBACkGjbIImjfZEwAAAW8TazlxAAAEAwBHMEUCIEe0o72t17u/qiNPD3Unjnf5wEwllLwTDdj8cT8oXzGjAiEA4gYO+1LHu1BIFxNdWfq8nyYsjYZirVT5O/mc7tbyOaAwDQYJKoZIhvcNAQELBQADggEBAArNqC5ObgSm5kt+a7/qMhuEh2MqQ6Gl6J98Eo9jlcJ+uBZ26Xnazr78jB4BxiFLDKxOZiPxUQCFIMBuSg1k48Uz6yL6vkhzKqk3IAMKTzkYPLJ5nWo5DSGuBlafw6nh6xMepSt0L++FUELs1k3nT+v4vOVTQRgWpnrRRw5A/ikFfY49s2wwn/4jfW6niJ5s3uCUvvh33zgRKmgRHQg4EiYL7StO86T0ZawEALSsa/9AZcsAwxZwHgFMLVT5WqcCW7L9BpiGwQrMNvroOh0vuqjxhlFWJY7BZvh9CwIcn7USTnm/hrRWlYU2Lei9h97lCQJRWr8ObsRENTxhKg9f8yhmCjImkVxP+7sgiYWmMt8FvcOXmlQiTNWFiWlrbpbqgwAAAAAAAASWMIIEkjCCA3qgAwIBAgIQCgFBQgAAAVOFc2oLheynCDANBgkqhkiG9w0BAQsFADA/MSQwIgYDVQQKExtEaWdpdGFsIFNpZ25hdHVyZSBUcnVzdCBDby4xFzAVBgNVBAMTDkRTVCBSb290IENBIFgzMB4XDTE2MDMxNzE2NDA0NloXDTIxMDMxNzE2NDA0NlowSjELMAkGA1UEBhMCVVMxFjAUBgNVBAoTDUxldCdzIEVuY3J5cHQxIzAhBgNVBAMTGkxldCdzIEVuY3J5cHQgQXV0aG9yaXR5IFgzMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnNMM8FrlLke3cl03g7NoYzDq1zUmGSXhvb418XCSL7e4S0EFq6meNQhY7LEqxGiHC6PjdeTm86dicbp5gWAf15Gan/PQeGdxyGkOlZHP/uaZ6WA8SMx+yk13EiSdRxta67nsHjcAHJyse6cF6s5K671B5TaYucv9bTyWaN8jKkKQDIZ0Z8h/pZq4UmEUEz9l6YKHy9v6Dlb2honzhT+Xhq+w3Brvaw2VFn3EK6BlspkENnWAa6xK8xuQSXgvopZPKiAlKQTGdMDQMc2PMTiVFrqoM7hD8bEfwzB/onkxEz0tNvjj/PIzark5McWvxI0NHWQWM6r6hCm21AvA2H3DkwIDAQABo4IBfTCCAXkwEgYDVR0TAQH/BAgwBgEB/wIBADAOBgNVHQ8BAf8EBAMCAYYwfwYIKwYBBQUHAQEEczBxMDIGCCsGAQUFBzABhiZodHRwOi8vaXNyZy50cnVzdGlkLm9jc3AuaWRlbnRydXN0LmNvbTA7BggrBgEFBQcwAoYvaHR0cDovL2FwcHMuaWRlbnRydXN0LmNvbS9yb290cy9kc3Ryb290Y2F4My5wN2MwHwYDVR0jBBgwFoAUxKexpHsscfrb4UuQdf/EFWCFiRAwVAYDVR0gBE0wSzAIBgZngQwBAgEwPwYLKwYBBAGC3xMBAQEwMDAuBggrBgEFBQcCARYiaHR0cDovL2Nwcy5yb290LXgxLmxldHNlbmNyeXB0Lm9yZzA8BgNVHR8ENTAzMDGgL6AthitodHRwOi8vY3JsLmlkZW50cnVzdC5jb20vRFNUUk9PVENBWDNDUkwuY3JsMB0GA1UdDgQWBBSoSmpjBH3duubRObemRWXv86jsoTANBgkqhkiG9w0BAQsFAAOCAQEA3TPXEfNjWDjdGBX7CVW+dla5cEilaUcne8IkCJLxWh9KEik3JHRRHGJouM2VcGfl96S8TihRzZvoroed6ti6WqEBmtzw3Wodatg+VyOeph4EYpr/1wXKtx8/wApIvJSwtmVi4MFU5aMqrSDE6ea73Mj2tcMyo5jMd6jmeWUHK8so/joWUoHOUgwuX4Po1QYz+3dszkDqMp4fklxBwXRsW10KXzPMTZ+sOPAveyxindmjkW8lGy+QsRlGPfZ+G6Z6h7mjem0Y+iWlkYcV4PIWL1iwBi8saCbGS5jN2p8M+X+Q7UNKEkROb3N6KOqkqm57TH2H3eDJAkSnh6/DNFu0QmYKMiaRXE/7uyCJhaYy3wW9w5eaVCJM1YWJaWtuluqDAAAAAAAAA04wggNKMIICMqADAgECAhBEr7CA1qMnuokwOYYu+EBrMA0GCSqGSIb3DQEBBQUAMD8xJDAiBgNVBAoTG0RpZ2l0YWwgU2lnbmF0dXJlIFRydXN0IENvLjEXMBUGA1UEAxMORFNUIFJvb3QgQ0EgWDMwHhcNMDAwOTMwMjExMjE5WhcNMjEwOTMwMTQwMTE1WjA/MSQwIgYDVQQKExtEaWdpdGFsIFNpZ25hdHVyZSBUcnVzdCBDby4xFzAVBgNVBAMTDkRTVCBSb290IENBIFgzMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA36/pl1AIg1e0zGJl9pCC7MfTLGswylvs2cN9x0DBGBSL4Ogzdkkq4z8hSZOsTg6vPkjLZe780yEPZdIq2TKPjOX3d7ASe7WVwImjqbrtcy56DAYyg6J+ihQwzRGg4So4uXkKMf1QvYBl37dRY4PI4ohh6kthgexSa7mi4ksaKJ9Io54M2gmOPhcuHt0g31vGKoqrLr1wrcULGiWQdHLFe2qrNNYwif/laBN7VAvI1q7sWpySHj1ks4zG37/JQXDsFnLVJuw4VTlD0Pz9GFxA8Zfr1ZqbjR262iW5xtjfwRUCOqvabvE+LvVcCJw81oNp5BCbGSq2KVfj5T2bn/ACXQIDAQABo0IwQDAPBgNVHRMBAf8EBTADAQH/MA4GA1UdDwEB/wQEAwIBBjAdBgNVHQ4EFgQUxKexpHsscfrb4UuQdf/EFWCFiRAwDQYJKoZIhvcNAQEFBQADggEBAKMaLJsXAFypHu4oZjc6v4PHP0vDCaCVIF3j2VlE0j4NPr2KS6B0H84Qgpx0Gh1+mBrdyxNLsyBE5JHpzPx9pdtq5f7m/eBO3bcAOrVwSa/y5esC8dECixnLlDpeSMQYHlgZXx4CWvAM8bGtqdxZhotu6ZH1hsr6uWYzqllbzuKnFnNHyyvMmbA3SM/jVkv1zw8McjKHxvBEu1NybUP1JkiaUme3WKv+Z3ZxeNsNolYUEzkkMYWiqAJaMEfh3VAHvAIJkADrZGNgmxa8iMkS5tJ9kYv5PTKNZbTpfLFXdurFtig5vxVlHMj2d5ZqCo13C9iRCwSOB9sptgrunYI1NRAAAAA= request-method GET response-head HTTP/2.0 200 OK
+server: nginx/1.14.0 (Ubuntu)
+date: Thu, 09 Jan 2020 14:03:56 GMT
+content-type: text/css
+content-length: 9042
+last-modified: Mon, 17 Dec 2018 07:17:56 GMT
+etag: "5c174da4-2352"
+expires: Thu, 16 Jan 2020 14:03:56 GMT
+pragma: public
+cache-control: max-age=604800, public
+accept-ranges: bytes
+X-Firefox-Spdy: h2
+ original-response-headers server: nginx/1.14.0 (Ubuntu)
+date: Thu, 09 Jan 2020 14:03:56 GMT
+content-type: text/css
+content-length: 9042
+last-modified: Mon, 17 Dec 2018 07:17:56 GMT
+etag: "5c174da4-2352"
+expires: Thu, 16 Jan 2020 14:03:56 GMT
+cache-control: max-age=604800
+pragma: public
+cache-control: public
+accept-ranges: bytes
+X-Firefox-Spdy: h2
+ ctid 5 eTLD1Access 1;0;194599804, uncompressed-len 0 net-response-time-onstart 260 net-response-time-onstop 260   #R

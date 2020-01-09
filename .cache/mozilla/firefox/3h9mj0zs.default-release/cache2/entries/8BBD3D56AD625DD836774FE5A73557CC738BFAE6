@@ -1,0 +1,427 @@
+/* global pm, wpcom_reblog, JSON */
+
+var jetpackLikesWidgetBatch = [];
+var jetpackLikesMasterReady = false;
+
+// Due to performance problems on pages with a large number of widget iframes that need to be loaded,
+// we are limiting the processing at any instant to unloaded widgets that are currently in viewport,
+// plus this constant that will allow processing of widgets above and bellow the current fold.
+// This aim of it is to improve the UX and hide the transition from unloaded to loaded state from users.
+var jetpackLikesLookAhead = 2000; // pixels
+
+// Keeps track of loaded comment likes widget so we can unload them when they are scrolled out of view.
+var jetpackCommentLikesLoadedWidgets = [];
+
+function JetpackLikesPostMessage( message, target ) {
+	if ( 'string' === typeof message ) {
+		try {
+			message = JSON.parse( message );
+		} catch ( e ) {
+			return;
+		}
+	}
+
+	pm( {
+		target: target,
+		type: 'likesMessage',
+		data: message,
+		origin: '*',
+	} );
+}
+
+function JetpackLikesBatchHandler() {
+	var requests = [];
+	jQuery( 'div.jetpack-likes-widget-unloaded' ).each( function() {
+		if ( jetpackLikesWidgetBatch.indexOf( this.id ) > -1 ) {
+			return;
+		}
+
+		if ( ! jetpackIsScrolledIntoView( this ) ) {
+			return;
+		}
+
+		jetpackLikesWidgetBatch.push( this.id );
+
+		var regex = /like-(post|comment)-wrapper-(\d+)-(\d+)-(\w+)/,
+			match = regex.exec( this.id ),
+			info;
+
+		if ( ! match || match.length !== 5 ) {
+			return;
+		}
+
+		info = {
+			blog_id: match[ 2 ],
+			width: this.width,
+		};
+
+		if ( 'post' === match[ 1 ] ) {
+			info.post_id = match[ 3 ];
+		} else if ( 'comment' === match[ 1 ] ) {
+			info.comment_id = match[ 3 ];
+		}
+
+		info.obj_id = match[ 4 ];
+
+		requests.push( info );
+	} );
+
+	if ( requests.length > 0 ) {
+		JetpackLikesPostMessage(
+			{ event: 'initialBatch', requests: requests },
+			window.frames[ 'likes-master' ]
+		);
+	}
+}
+
+function JetpackLikesMessageListener( event, message ) {
+	var allowedOrigin, $container, $list, offset, rowLength, height, scrollbarWidth;
+
+	if ( 'undefined' === typeof event.event ) {
+		return;
+	}
+
+	// We only allow messages from one origin
+	allowedOrigin = 'https://widgets.wp.com';
+	if ( allowedOrigin !== message.origin ) {
+		return;
+	}
+
+	switch ( event.event ) {
+		case 'masterReady':
+			jQuery( document ).ready( function() {
+				jetpackLikesMasterReady = true;
+
+				var stylesData = {
+						event: 'injectStyles',
+					},
+					$sdTextColor = jQuery( '.sd-text-color' ),
+					$sdLinkColor = jQuery( '.sd-link-color' );
+
+				if ( jQuery( 'iframe.admin-bar-likes-widget' ).length > 0 ) {
+					JetpackLikesPostMessage( { event: 'adminBarEnabled' }, window.frames[ 'likes-master' ] );
+
+					stylesData.adminBarStyles = {
+						background: jQuery( '#wpadminbar .quicklinks li#wp-admin-bar-wpl-like > a' ).css(
+							'background'
+						),
+						isRtl: 'rtl' === jQuery( '#wpadminbar' ).css( 'direction' ),
+					};
+				}
+
+				if ( ! window.addEventListener ) {
+					jQuery( '#wp-admin-bar-admin-bar-likes-widget' ).hide();
+				}
+
+				stylesData.textStyles = {
+					color: $sdTextColor.css( 'color' ),
+					fontFamily: $sdTextColor.css( 'font-family' ),
+					fontSize: $sdTextColor.css( 'font-size' ),
+					direction: $sdTextColor.css( 'direction' ),
+					fontWeight: $sdTextColor.css( 'font-weight' ),
+					fontStyle: $sdTextColor.css( 'font-style' ),
+					textDecoration: $sdTextColor.css( 'text-decoration' ),
+				};
+
+				stylesData.linkStyles = {
+					color: $sdLinkColor.css( 'color' ),
+					fontFamily: $sdLinkColor.css( 'font-family' ),
+					fontSize: $sdLinkColor.css( 'font-size' ),
+					textDecoration: $sdLinkColor.css( 'text-decoration' ),
+					fontWeight: $sdLinkColor.css( 'font-weight' ),
+					fontStyle: $sdLinkColor.css( 'font-style' ),
+				};
+
+				JetpackLikesPostMessage( stylesData, window.frames[ 'likes-master' ] );
+
+				JetpackLikesBatchHandler();
+			} );
+
+			break;
+
+		case 'showLikeWidget':
+			jQuery( '#' + event.id + ' .likes-widget-placeholder' ).fadeOut( 'fast' );
+			break;
+
+		case 'showCommentLikeWidget':
+			jQuery( '#' + event.id + ' .likes-widget-placeholder' ).fadeOut( 'fast' );
+			break;
+
+		case 'killCommentLikes':
+			// If kill switch for comment likes is enabled remove all widgets wrappers and `Loading...` placeholders.
+			jQuery( '.jetpack-comment-likes-widget-wrapper' ).remove();
+			break;
+
+		case 'clickReblogFlair':
+			wpcom_reblog.toggle_reblog_box_flair( event.obj_id );
+			break;
+
+		case 'showOtherGravatars':
+			$container = jQuery( '#likes-other-gravatars' );
+			$list = $container.find( 'ul' );
+
+			$container.hide();
+			$list.html( '' );
+
+			$container.find( '.likes-text span' ).text( event.total );
+
+			jQuery.each( event.likers, function( i, liker ) {
+				var element;
+
+				if ( 'http' !== liker.profile_URL.substr( 0, 4 ) ) {
+					// We only display gravatars with http or https schema
+					return;
+				}
+
+				element = jQuery( '<li><a><img /></a></li>' );
+				element.addClass( liker.css_class );
+
+				element
+					.find( 'a' )
+					.attr( {
+						href: liker.profile_URL,
+						rel: 'nofollow',
+						target: '_parent',
+					} )
+					.addClass( 'wpl-liker' );
+
+				element
+					.find( 'img' )
+					.attr( {
+						src: liker.avatar_URL,
+						alt: liker.name,
+					} )
+					.css( {
+						width: '30px',
+						height: '30px',
+						paddingRight: '3px',
+					} );
+
+				$list.append( element );
+			} );
+
+			offset = jQuery( 'body' )
+				.find( "[name='" + event.parent + "']" )
+				.offset();
+
+			$container.css( 'left', offset.left + event.position.left - 10 + 'px' );
+			$container.css( 'top', offset.top + event.position.top - 33 + 'px' );
+
+			rowLength = Math.floor( event.width / 37 );
+			height = Math.ceil( event.likers.length / rowLength ) * 37 + 13;
+			if ( height > 204 ) {
+				height = 204;
+			}
+
+			$container.css( 'height', height + 'px' );
+			$container.css( 'width', rowLength * 37 - 7 + 'px' );
+
+			$list.css( 'width', rowLength * 37 + 'px' );
+
+			$container.fadeIn( 'slow' );
+
+			scrollbarWidth = $list[ 0 ].offsetWidth - $list[ 0 ].clientWidth;
+			if ( scrollbarWidth > 0 ) {
+				$container.width( $container.width() + scrollbarWidth );
+				$list.width( $list.width() + scrollbarWidth );
+			}
+	}
+}
+
+pm.bind( 'likesMessage', JetpackLikesMessageListener );
+
+jQuery( document ).click( function( e ) {
+	var $container = jQuery( '#likes-other-gravatars' );
+
+	if ( $container.has( e.target ).length === 0 ) {
+		$container.fadeOut( 'slow' );
+	}
+} );
+
+function JetpackLikesWidgetQueueHandler() {
+	var wrapperID;
+
+	if ( ! jetpackLikesMasterReady ) {
+		setTimeout( JetpackLikesWidgetQueueHandler, 500 );
+		return;
+	}
+
+	// Restore widgets to initial unloaded state when they are scrolled out of view.
+	jetpackUnloadScrolledOutWidgets();
+
+	var unloadedWidgetsInView = jetpackGetUnloadedWidgetsInView();
+
+	if ( unloadedWidgetsInView.length > 0 ) {
+		// Grab any unloaded widgets for a batch request
+		JetpackLikesBatchHandler();
+	}
+
+	for ( var i = 0, length = unloadedWidgetsInView.length; i <= length - 1; i++ ) {
+		wrapperID = unloadedWidgetsInView[ i ].id;
+
+		if ( ! wrapperID ) {
+			continue;
+		}
+
+		jetpackLoadLikeWidgetIframe( wrapperID );
+	}
+}
+
+function jetpackLoadLikeWidgetIframe( wrapperID ) {
+	var $wrapper;
+
+	if ( 'undefined' === typeof wrapperID ) {
+		return;
+	}
+
+	$wrapper = jQuery( '#' + wrapperID );
+	$wrapper.find( 'iframe' ).remove();
+
+	var placeholder = $wrapper.find( '.likes-widget-placeholder' );
+
+	// Post like iframe
+	if ( placeholder.hasClass( 'post-likes-widget-placeholder' ) ) {
+		var postLikesFrame = document.createElement( 'iframe' );
+
+		postLikesFrame[ 'class' ] = 'post-likes-widget jetpack-likes-widget';
+		postLikesFrame.name = $wrapper.data( 'name' );
+		postLikesFrame.src = $wrapper.data( 'src' );
+		postLikesFrame.height = '18px';
+		postLikesFrame.width = '200px';
+		postLikesFrame.frameBorder = '0';
+		postLikesFrame.scrolling = 'no';
+
+		if ( $wrapper.hasClass( 'slim-likes-widget' ) ) {
+			postLikesFrame.height = '22px';
+			postLikesFrame.width = '68px';
+			postLikesFrame.scrolling = 'no';
+		} else {
+			postLikesFrame.height = '55px';
+			postLikesFrame.width = '100%';
+		}
+
+		placeholder.after( postLikesFrame );
+	}
+
+	// Comment like iframe
+	if ( placeholder.hasClass( 'comment-likes-widget-placeholder' ) ) {
+		var commentLikesFrame = document.createElement( 'iframe' );
+
+		commentLikesFrame[ 'class' ] = 'comment-likes-widget-frame jetpack-likes-widget-frame';
+		commentLikesFrame.name = $wrapper.data( 'name' );
+		commentLikesFrame.src = $wrapper.data( 'src' );
+		commentLikesFrame.height = '18px';
+		commentLikesFrame.width = '100%';
+		commentLikesFrame.frameBorder = '0';
+		commentLikesFrame.scrolling = 'no';
+
+		$wrapper.find( '.comment-like-feedback' ).after( commentLikesFrame );
+
+		jetpackCommentLikesLoadedWidgets.push( commentLikesFrame );
+	}
+
+	$wrapper
+		.removeClass( 'jetpack-likes-widget-unloaded' )
+		.addClass( 'jetpack-likes-widget-loading' );
+
+	$wrapper.find( 'iframe' ).load( function( e ) {
+		var $iframe = jQuery( e.target );
+
+		JetpackLikesPostMessage(
+			{ event: 'loadLikeWidget', name: $iframe.attr( 'name' ), width: $iframe.width() },
+			window.frames[ 'likes-master' ]
+		);
+
+		$wrapper
+			.removeClass( 'jetpack-likes-widget-loading' )
+			.addClass( 'jetpack-likes-widget-loaded' );
+
+		if ( $wrapper.hasClass( 'slim-likes-widget' ) ) {
+			$wrapper.find( 'iframe' ).Jetpack( 'resizeable' );
+		}
+	} );
+}
+
+function jetpackGetUnloadedWidgetsInView() {
+	var $unloadedWidgets = jQuery( 'div.jetpack-likes-widget-unloaded' );
+
+	return $unloadedWidgets.filter( function() {
+		return jetpackIsScrolledIntoView( this );
+	} );
+}
+
+function jetpackIsScrolledIntoView( element ) {
+	var top = element.getBoundingClientRect().top;
+	var bottom = element.getBoundingClientRect().bottom;
+
+	// Allow some slack above and bellow the fold with jetpackLikesLookAhead,
+	// with the aim of hiding the transition from unloaded to loaded widget from users.
+	return top + jetpackLikesLookAhead >= 0 && bottom <= window.innerHeight + jetpackLikesLookAhead;
+}
+
+function jetpackUnloadScrolledOutWidgets() {
+	for ( var i = jetpackCommentLikesLoadedWidgets.length - 1; i >= 0; i-- ) {
+		var currentWidgetIframe = jetpackCommentLikesLoadedWidgets[ i ];
+
+		if ( ! jetpackIsScrolledIntoView( currentWidgetIframe ) ) {
+			var $widgetWrapper = jQuery( currentWidgetIframe )
+				.parent()
+				.parent();
+
+			// Restore parent class to 'unloaded' so this widget can be picked up by queue manager again if needed.
+			$widgetWrapper
+				.removeClass( 'jetpack-likes-widget-loaded jetpack-likes-widget-loading' )
+				.addClass( 'jetpack-likes-widget-unloaded' );
+
+			// Bring back the loading placeholder into view.
+			$widgetWrapper.children( '.comment-likes-widget-placeholder' ).fadeIn();
+
+			// Remove it from the list of loaded widgets.
+			jetpackCommentLikesLoadedWidgets.splice( i, 1 );
+
+			// Remove comment like widget iFrame.
+			jQuery( currentWidgetIframe ).remove();
+		}
+	}
+}
+
+var jetpackWidgetsDelayedExec = function( after, fn ) {
+	var timer;
+	return function() {
+		timer && clearTimeout( timer );
+		timer = setTimeout( fn, after );
+	};
+};
+
+var jetpackOnScrollStopped = jetpackWidgetsDelayedExec( 250, JetpackLikesWidgetQueueHandler );
+
+// Load initial batch of widgets, prior to any scrolling events.
+JetpackLikesWidgetQueueHandler();
+
+// Add event listener to execute queue handler after scroll.
+window.addEventListener( 'scroll', jetpackOnScrollStopped, true );
+¡¬À¾{y      ^2Í^2ÍA7ùC^ mM   e    :https://www.ochobitshacenunbyte.com/wp-content/plugins/jetpack/modules/likes/queuehandler.js?ver=8.0 necko:classified 1 strongly-framed 1 security-info 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 request-method GET response-head HTTP/2.0 200 OK
+server: nginx/1.14.0 (Ubuntu)
+date: Thu, 09 Jan 2020 14:03:57 GMT
+content-type: application/javascript
+content-length: 11326
+last-modified: Wed, 04 Dec 2019 17:34:02 GMT
+etag: "5de7ee0a-2c3e"
+expires: Thu, 16 Jan 2020 14:03:57 GMT
+pragma: public
+cache-control: max-age=604800, public
+accept-ranges: bytes
+X-Firefox-Spdy: h2
+ original-response-headers server: nginx/1.14.0 (Ubuntu)
+date: Thu, 09 Jan 2020 14:03:57 GMT
+content-type: application/javascript
+content-length: 11326
+last-modified: Wed, 04 Dec 2019 17:34:02 GMT
+etag: "5de7ee0a-2c3e"
+expires: Thu, 16 Jan 2020 14:03:57 GMT
+cache-control: max-age=604800
+pragma: public
+cache-control: public
+accept-ranges: bytes
+X-Firefox-Spdy: h2
+ ctid 2 eTLD1Access 1;0;194599804, uncompressed-len 0 net-response-time-onstart 753 net-response-time-onstop 785   ,>
